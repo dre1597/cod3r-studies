@@ -1,5 +1,5 @@
 package minesweeper.model;
 
 public enum FieldEvent {
-  OPEN, MARK, UNMARK, EXPLODE
+  OPEN, MARK, UNMARK, EXPLODE, RESTART
 }

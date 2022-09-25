@@ -7,12 +7,11 @@ public class Field {
   private final int line;
   private final int column;
   private final List<Field> neighbors = new ArrayList<>();
+  // could be a set here
+  private final List<FieldObserver> observers = new ArrayList<>();
   private boolean opened = false;
   private boolean mined = false;
   private boolean marked = false;
-
-  // could be a set here
-  private List<FieldObserver> observers = new ArrayList<>();
   // private List<BiConsumer<Field, FieldEvent>>  observers = new ArrayList<>();
 
   Field(int line, int column) {
@@ -32,35 +31,16 @@ public class Field {
     return marked;
   }
 
-  public boolean isOpened() {
-    return opened;
-  }
-
-  void setOpened(boolean open) {
-    this.opened = open;
-
-    if (open) {
-      notifyObservers(FieldEvent.OPEN);
-    }
-  }
-
-  public boolean isClosed() {
-    return !isOpened();
+  void setOpened() {
+    this.opened = true;
+    notifyObservers(FieldEvent.OPEN);
   }
 
   public boolean isMined() {
     return mined;
   }
 
-  public int getLine() {
-    return line;
-  }
-
-  public int getColumn() {
-    return column;
-  }
-
-  boolean addNeighbor(Field neighbor) {
+  void addNeighbor(Field neighbor) {
     boolean differentLine = line != neighbor.line;
     boolean differentColumn = column != neighbor.column;
     boolean isDiagonal = differentLine && differentColumn;
@@ -71,12 +51,10 @@ public class Field {
 
     if (!isDiagonal && delta == 1 || isDiagonal && delta == 2) {
       neighbors.add(neighbor);
-      return true;
     }
-    return false;
   }
 
-  void toggleMark() {
+  public void toggleMark() {
     marked = !marked;
 
     if (marked) {
@@ -86,28 +64,24 @@ public class Field {
     }
   }
 
-  boolean open() {
+  public void open() {
     if (!opened && !marked) {
       if (mined) {
         notifyObservers(FieldEvent.EXPLODE);
-        return true;
+        return;
       }
 
-      setOpened(true);
+      setOpened();
 
       notifyObservers(FieldEvent.OPEN);
 
       if (isNeighborSecure()) {
         neighbors.forEach(Field::open);
       }
-
-      return true;
     }
-
-    return false;
   }
 
-  boolean isNeighborSecure() {
+  public boolean isNeighborSecure() {
     return neighbors.stream().noneMatch(neighbor -> neighbor.mined);
   }
 
@@ -122,13 +96,15 @@ public class Field {
     return clearField || minedField;
   }
 
-  long neighborMines() {
-    return neighbors.stream().filter(neighbor -> neighbor.mined).count();
+  public int neighborMines() {
+    return (int) neighbors.stream().filter(neighbor -> neighbor.mined).count();
   }
 
   void restart() {
     opened = false;
     mined = false;
     marked = false;
+
+    notifyObservers(FieldEvent.RESTART);
   }
 }
