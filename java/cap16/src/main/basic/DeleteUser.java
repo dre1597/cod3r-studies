@@ -6,18 +6,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class NewUser {
+public class DeleteUser {
   public static void main(String[] args) {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("java-cap16");
     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-    User newUser = new User("Name1", "name@email.com");
+    User user = entityManager.find(User.class, 3L);
 
-    entityManager.getTransaction().begin();
-    entityManager.persist(newUser);
-    entityManager.getTransaction().commit();
-
-    System.out.println(newUser.getId());
+    if (user != null) {
+      entityManager.getTransaction().begin();
+      entityManager.remove(user);
+      entityManager.getTransaction().commit();
+    }
 
     entityManager.close();
     entityManagerFactory.close();

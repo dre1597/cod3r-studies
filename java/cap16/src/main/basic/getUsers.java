@@ -5,19 +5,24 @@ import model.basic.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
-public class NewUser {
+public class getUsers {
   public static void main(String[] args) {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("java-cap16");
     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-    User newUser = new User("Name1", "name@email.com");
+    String jpql = "select u from User u";
+    TypedQuery<User> query = entityManager.createQuery(jpql, User.class);
 
-    entityManager.getTransaction().begin();
-    entityManager.persist(newUser);
-    entityManager.getTransaction().commit();
+    query.setMaxResults(5);
 
-    System.out.println(newUser.getId());
+    List<User> users = query.getResultList();
+
+    for (User user : users) {
+      System.out.println("ID: " + user.getId() + " Email: " + user.getEmail());
+    }
 
     entityManager.close();
     entityManagerFactory.close();
