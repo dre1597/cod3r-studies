@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class getUsers {
+public class GetUsers {
   public static void main(String[] args) {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("java-cap16");
     EntityManager entityManager = entityManagerFactory.createEntityManager();

@@ -5,7 +5,27 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="java-cap16">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <mapping-file>META-INF/queries.xml</mapping-file>
+
         <class>model.basic.User</class>
+        <class>model.basic.Product</class>
+
+        <class>model.composition.Address</class>
+        <class>model.composition.Employee</class>
+        <class>model.composition.Provider</class>
+
+        <class>model.inheritance.Student</class>
+        <class>model.inheritance.SpecialStudent</class>
+
+        <class>model.manytomany.Actor</class>
+        <class>model.manytomany.Movie</class>
+
+        <class>model.manytoone.Order</class>
+        <class>model.manytoone.Item</class>
+
+        <class>model.onetoone.Costumer</class>
+        <class>model.onetoone.Seat</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver"
@@ -13,7 +33,7 @@
             <property name="javax.persistence.jdbc.url"
                       value="jdbc:mysql://localhost/java-cap16"/>
             <property name="javax.persistence.jdbc.user"
-                      value=""/>
+                      value="root"/>
             <property name="javax.persistence.jdbc.password"
                       value=""/>
 
