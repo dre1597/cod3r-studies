@@ -20,4 +20,8 @@ export class PrismaUserRepository implements UserRepository {
   async save(user: UserModel): Promise<UserModel> {
     return this.prismaClient.user.create({ data: user });
   }
+
+  public findAll(): Promise<UserModel[]> {
+    return this.prismaClient.user.findMany();
+  }
 }

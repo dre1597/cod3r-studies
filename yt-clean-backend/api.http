@@ -4,3 +4,7 @@ Content-Type: application/x-www-form-urlencoded
 name=John
 &email=john@example.com
 &password=123
+
+###
+GET http://localhost:3000/users HTTP/1.1
+

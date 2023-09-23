@@ -15,4 +15,7 @@ export class InMemoryUserRepository implements UserRepository {
     return newUser;
   }
 
+  public async findAll(): Promise<UserModel[]> {
+    return this.users.slice();
+  }
 }
