@@ -1,11 +1,13 @@
 import { Elysia } from 'elysia';
-import { InMemoryUserRepository } from './external/in-memory/in-memory-user.repository';
+
 import { CreateUserUseCase } from './core/user/use-case/create-user.use-case';
 import { CreateUserController } from './adapters/user/create-user.controller';
+import { PrismaUserRepository } from './external/prisma/prisma-user.repository';
 
 const app = new Elysia();
 
-const userRepository = new InMemoryUserRepository();
+// const userRepository = new InMemoryUserRepository();
+const userRepository = new PrismaUserRepository();
 const createUserUseCase = new CreateUserUseCase(userRepository);
 new CreateUserController(app, createUserUseCase);
 
