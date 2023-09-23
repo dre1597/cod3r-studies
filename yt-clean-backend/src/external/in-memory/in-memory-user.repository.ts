@@ -18,4 +18,8 @@ export class InMemoryUserRepository implements UserRepository {
   public async findAll(): Promise<UserModel[]> {
     return this.users.slice();
   }
+
+  public async findById(id: string): Promise<UserModel | null> {
+    return this.users.find(user => user.id === id) ?? null;
+  }
 }

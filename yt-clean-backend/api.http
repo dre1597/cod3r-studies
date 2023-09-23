@@ -8,3 +8,6 @@ name=John
 ###
 GET http://localhost:3000/users HTTP/1.1
 
+###
+
+GET http://localhost:3000/users/4c457676-6555-419b-96c5-498c44ae6d04 HTTP/1.1

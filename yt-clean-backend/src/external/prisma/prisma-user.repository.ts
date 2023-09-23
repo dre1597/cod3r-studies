@@ -24,4 +24,10 @@ export class PrismaUserRepository implements UserRepository {
   public findAll(): Promise<UserModel[]> {
     return this.prismaClient.user.findMany();
   }
+
+  public findById(id: string): Promise<UserModel | null> {
+    return this.prismaClient.user.findUnique({
+      where: { id }
+    })
+  }
 }
