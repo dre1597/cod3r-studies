@@ -1,5 +1,9 @@
 # Elysia with Bun runtime
 
+## Description
+
+Based on this [Youtube video](https://www.youtube.com/watch?v=5p5sE62bBVs)
+
 ## Getting Started
 To get started with this template, simply paste this command into your terminal:
 ```bash
